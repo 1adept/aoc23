@@ -1,4 +1,4 @@
-use core::num;
+
 
 use crate::util::{Day, Solution};
 
@@ -9,7 +9,7 @@ impl Day for Day1 {
         let (part1, part2) = input
             .lines()
             .take_while(|line| !line.is_empty())
-            .map(|line| (part1_line(&line), part2_line(line)))
+            .map(|line| (part1_line(line), part2_line(line)))
             .reduce(|(p1, p2), (part1, part2)| (p1 + part1, p2 + part2))
             .expect("Failed to solve");
 
