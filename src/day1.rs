@@ -1,22 +1,29 @@
-
-
 use crate::util::{Day, Solution};
 
-pub struct Day1;
+pub struct Day1(String);
 
 impl Day for Day1 {
-    fn solve(input: &str) -> Solution {
-        let (part1, part2) = input
-            .lines()
-            .take_while(|line| !line.is_empty())
-            .map(|line| (part1_line(line), part2_line(line)))
-            .reduce(|(p1, p2), (part1, part2)| (p1 + part1, p2 + part2))
-            .expect("Failed to solve");
-
-        (part1, part2)
+    fn parse(text: &str) -> Box<Self> {
+        Box::new(Day1(text.to_string()))
+    }
+    fn solve1(&self) -> usize {
+        solve(&self.0).0
+    }
+    fn solve2(&self) -> usize {
+        solve(&self.0).1
     }
 }
 
+fn solve(input: &str) -> Solution {
+    let (part1, part2) = input
+        .lines()
+        .take_while(|line| !line.is_empty())
+        .map(|line| (part1_line(line), part2_line(line)))
+        .reduce(|(p1, p2), (part1, part2)| (p1 + part1, p2 + part2))
+        .expect("Failed to solve");
+
+    (part1, part2)
+}
 fn part1_line(line: &str) -> usize {
     let numbers: Vec<usize> = line
         .chars()
@@ -104,11 +111,13 @@ mod tests {
 
     #[test]
     fn test_part1() {
-        assert_eq!(142, Day1::solve(EXAMPLE1).0);
+        let day = Day1::parse(EXAMPLE1);
+        assert_eq!(142, day.solve1());
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(281, Day1::solve(EXAMPLE2).1);
+        let day = Day1::parse(EXAMPLE2);
+        assert_eq!(281, day.solve2());
     }
 }

@@ -3,7 +3,14 @@ use std::{fs, path::Path};
 pub type Solution = (usize, usize);
 
 pub trait Day {
-    fn solve(input: &str) -> Solution;
+    fn parse(text: &str) -> Box<Self>
+    where
+        Self: Sized;
+    fn solve1(&self) -> usize;
+    fn solve2(&self) -> usize;
+    fn solve(&self) -> (usize, usize) {
+        (self.solve1(), self.solve2())
+    }
 }
 
 ///
